@@ -25,10 +25,10 @@ public class AppInitializer extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         generateTables();
-        primaryStage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/ManageCustomers.fxml")).load()));
+        primaryStage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/DashBoard.fxml")).load()));
         primaryStage.show();
         primaryStage.centerOnScreen();
-        primaryStage.setTitle("Manage Customers");
+        primaryStage.setTitle("Manage Different Entities");
 
     }
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="286.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.mc.controller.DashBoardController">
+   <children>
+      <VBox alignment="CENTER" layoutX="35.0" layoutY="36.0" maxWidth="1.7976931348623157E308" spacing="25.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="36.0">
+         <children>
+            <Button fx:id="btnCustomers" mnemonicParsing="false" onAction="#btnCustomersOnAction" prefWidth="250.0" text="MANAGE CUSTOMERS">
+               <font>
+                  <Font name="Ubuntu Bold Italic" size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnStudents" mnemonicParsing="false" onAction="#btnStudentsOnAction" prefWidth="250.0" text="MANAGE SUDENTS">
+               <font>
+                  <Font name="Ubuntu Bold Italic" size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnTeachers" mnemonicParsing="false" onAction="#btnTeachersOnAction" prefWidth="250.0" text="MANAGE TEACHERS">
+               <font>
+                  <Font name="Ubuntu Bold Italic" size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEmployees" mnemonicParsing="false" onAction="#btnEmployeesOnAction" prefWidth="250.0" text="MANAGE  EMPLOYEES">
+               <font>
+                  <Font name="Ubuntu Bold Italic" size="19.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
