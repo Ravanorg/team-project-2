@@ -41,7 +41,7 @@ public class DBConnection {
         return (dbConnection==null) ? dbConnection=new DBConnection():dbConnection;
     }
 
-    public Connection connection() {
+    public Connection getConnection() {
         return connection;
     }
 }

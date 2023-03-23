@@ -32,7 +32,7 @@ public class AppInitializer extends Application {
     }
 
     private void generateTables() {
-        Connection connection = DBConnection.getDbConnection().connection();
+        Connection connection = DBConnection.getDbConnection().getConnection();
         try {
             Statement stm = connection.createStatement();
             InputStream is = getClass().getResourceAsStream("/schema.sql");
@@ -44,7 +44,6 @@ public class AppInitializer extends Application {
                 dbScript.append(line).append("\n");
             }
             br.close();
-            System.out.println(dbScript);
             stm.execute(dbScript.toString());
 
         } catch (SQLException e) {
