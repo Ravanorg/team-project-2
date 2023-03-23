@@ -17,41 +17,45 @@ import java.sql.Statement;
 
 public class AppInitializer extends Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         launch(args);
+        DBConnection.getInstance().getConnection().close();
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         generateTables();
-        primaryStage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/StudentView.fxml")).load()));
-        primaryStage.setTitle("Manage Students");
+        primaryStage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/DashBoard.fxml")).load()));
         primaryStage.show();
         primaryStage.centerOnScreen();
+        primaryStage.setTitle("Manage Different Entities");
 
     }
 
     private void generateTables() {
-        Connection connection = DBConnection.getDbConnection().getConnection();
+        var connection = DBConnection.getInstance().getConnection();
         try {
             Statement stm = connection.createStatement();
             InputStream is = getClass().getResourceAsStream("/schema.sql");
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader br = new BufferedReader(isr);
-            String line = null;
-            StringBuilder dbScript = new StringBuilder();
-            while ((line=br.readLine())!=null){
-                dbScript.append(line).append("\n");
+
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+
             }
             br.close();
-            stm.execute(dbScript.toString());
-
+            System.out.println(sb.toString());
+            stm.executeUpdate(sb.toString());
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Failed to create database").showAndWait();
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to read schema script");
         } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR,"Failed to read the schema.sql file").showAndWait();
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to find schema script");
         }
+
     }
 }
