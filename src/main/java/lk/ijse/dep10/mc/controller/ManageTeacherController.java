@@ -11,10 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.dep10.mc.db.DBConnection;
 import lk.ijse.dep10.mc.model.Teacher;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ManageTeacherController {
 
@@ -36,7 +33,8 @@ public class ManageTeacherController {
     @FXML
     private TextField txtId;
 
-//    String idTeacher="T"+count;
+    int count=0;
+    String idTeacher="T"+count;
 
     @FXML
     private TextField txtName;
@@ -46,6 +44,8 @@ public class ManageTeacherController {
         tblTeacher.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tblTeacher.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("address"));
         loadTeachers();
+        txtId.setText(idTeacher);
+        txtId.setDisable(true);
 
     }
 
@@ -60,7 +60,13 @@ public class ManageTeacherController {
                 String name = resultSet.getString("name");
                 String address = resultSet.getString("address");
                 tblTeacher.getItems().add(new Teacher(id, name, address));
+                if (count<Integer.parseInt(id.substring(1))){
+                    count = Integer.parseInt(id.substring(1));
+                    System.out.println(count);
+                }
             }
+            count++;
+            idTeacher=String.format("T%03d",count);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,"Unable to load teachers to the table").showAndWait();
             e.printStackTrace();
@@ -72,25 +78,55 @@ public class ManageTeacherController {
     void btnNewTeacherOnAction(ActionEvent event) {
         btnDelete.setDisable(true);
         tblTeacher.getSelectionModel().clearSelection();
-        txtId.clear();
         txtName.clear();
         txtAddress.clear();
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+        Connection connection = DBConnection.getInstance().getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement statement = connection.createStatement();
+            String sql = "DELETE FROM Teacher WHERE id='%s'";
+            sql = String.format(sql, tblTeacher.getSelectionModel().getSelectedItem().getId());
+            statement.executeUpdate(sql);
+
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Unable to add Teacher to databasee").showAndWait();
+            throw new RuntimeException(e);
+        }
+
+        tblTeacher.getItems().remove(tblTeacher.getSelectionModel().getSelectedItem());
+
+        btnNewTeacher.fire();
+
 
     }
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        if (!isValid()) return;
-        addToDatabase();
-        addTOTable();
+        System.out.println("btv save");
+        if (tblTeacher.getSelectionModel()!=null) {
+            if (!isValid()) return;
+            addToDatabase();
+            addTOTable();
+            count++;
 
+        }else {
+
+        }
+        System.out.println("save"+count);
+        idTeacher=String.format("T%03d",count);
+        txtId.setText(idTeacher);
+        btnNewTeacher.fire();
     }
 
     private void addToDatabase() {
+        System.out.println("add database");
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             String id = txtId.getText();
