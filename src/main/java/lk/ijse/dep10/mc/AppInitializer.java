@@ -12,37 +12,49 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AppInitializer extends Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         launch(args);
+        DBConnection.getInstance().getConnection().close();
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        generateDatabase();
-        primaryStage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/ManageTeacher.fxml")).load()));
-        primaryStage.setTitle("Manage Teachers");
-        primaryStage.centerOnScreen();
+        generateTables();
+        primaryStage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/DashBoard.fxml")).load()));
         primaryStage.show();
+        primaryStage.centerOnScreen();
+        primaryStage.setTitle("Manage Different Entities");
+
     }
-    private void generateDatabase(){
-        try {Connection connection = DBConnection.getInstance().getConnection();
-            Statement statement = connection.createStatement();
-            InputStream resourceAsStream = getClass().getResourceAsStream("/schema.sql");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
+
+    private void generateTables() {
+        var connection = DBConnection.getInstance().getConnection();
+        try {
+            Statement stm = connection.createStatement();
+            InputStream is = getClass().getResourceAsStream("/schema.sql");
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+
             String line;
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((line=bufferedReader.readLine()) != null){
-                stringBuilder.append(line).append("\n");
+            StringBuilder sb = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+
             }
-            bufferedReader.close();
-            statement.execute(stringBuilder.toString());
-        } catch (Exception e) {
+            br.close();
+            System.out.println(sb.toString());
+            stm.executeUpdate(sb.toString());
+        } catch (SQLException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Unable to generate tables").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Failed to read schema script");
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to find schema script");
         }
 
     }
