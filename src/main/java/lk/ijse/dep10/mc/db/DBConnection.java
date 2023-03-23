@@ -1,5 +1,7 @@
 package lk.ijse.dep10.mc.db;
 
+import javafx.scene.control.Alert;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,6 +20,8 @@ public class DBConnection {
         try {
             fileReader = new FileReader(file);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Unable to read resource bundle").showAndWait();
             throw new RuntimeException(e);
         }
 
@@ -26,6 +30,8 @@ public class DBConnection {
             properties.load(fileReader);
             fileReader.close();
         } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Unable to load resource bundle").showAndWait();
             throw new RuntimeException(e);
         }
         String password = properties.getProperty("mysql.password","asdf123");
@@ -36,6 +42,8 @@ public class DBConnection {
         try {
             connection  = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database+"?createDatabaseIfNotExist=true&allowMultiQueries=true",username,password);
         } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Unable to generate db connection0").showAndWait();
             throw new RuntimeException(e);
         }
     }
