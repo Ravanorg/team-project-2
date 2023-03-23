@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="581.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.mc.controller.ManageCustomersController">
+<AnchorPane prefHeight="581.0" prefWidth="649.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.mc.controller.ManageCustomersController">
    <children>
       <Button fx:id="btnNewCustomer" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnNewCustomerOnAction" prefHeight="32.0" prefWidth="134.0" text="+ NEW CUSTOMER" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0">
          <font>
@@ -61,7 +61,7 @@
                         <Font name="Ubuntu Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="35.0" prefWidth="104.0" text="DELETE">
+                  <Button fx:id="btnDelete" disable="true" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="35.0" prefWidth="104.0" text="DELETE">
                      <font>
                         <Font name="Ubuntu Bold" size="13.0" />
                      </font>
