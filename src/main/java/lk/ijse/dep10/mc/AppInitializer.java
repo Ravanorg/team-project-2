@@ -1,3 +1,5 @@
+package lk.ijse.dep10.mc;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,5 +19,6 @@ public class AppInitializer extends Application {
         primaryStage.show();
         primaryStage.centerOnScreen();
         primaryStage.setTitle("Manage Customers");
+
     }
 }
