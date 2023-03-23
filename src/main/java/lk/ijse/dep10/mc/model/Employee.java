@@ -1,4 +1,4 @@
-package lk.ijse.dep10.mc.controller;
+package lk.ijse.dep10.mc.model;
 
 import java.io.Serializable;
 

@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.dep10.mc.db.DBConnection;
+import lk.ijse.dep10.mc.model.Employee;
 
 import java.sql.*;
 
@@ -38,7 +39,7 @@ public class EmployeeController {
     public void initialize(){
         connection = DBConnection.getInstance().getConnection();
 
-        btnSave.setDisable(true);
+        btnDelete.setDisable(true);
         txtId.setDisable(true);
 
         tblEmployees.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));

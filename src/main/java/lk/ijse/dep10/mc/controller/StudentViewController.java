@@ -49,7 +49,7 @@ public class StudentViewController {
     }
 
     private void loadStudents() {
-        Connection connection = DBConnection.getDbConnection().getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         try {
             Statement stm = connection.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM Student");
@@ -70,7 +70,7 @@ public class StudentViewController {
     void btnDeleteOnAction(ActionEvent event) {
         Student selectedStudent = tblStudents.getSelectionModel().getSelectedItem();
         if (selectedStudent==null)return;
-        Connection connection = DBConnection.getDbConnection().getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         try {
             PreparedStatement stm = connection.prepareStatement("DELETE FROM Student WHERE id=?");
             stm.setString(1, selectedStudent.getId());
@@ -105,7 +105,7 @@ public class StudentViewController {
     @FXML
     void btnSaveOnAction(ActionEvent event) {
         if (!dataValid()) return;
-        Connection connection = DBConnection.getDbConnection().getConnection();
+        Connection connection = DBConnection.getInstance().getConnection();
         try {
             PreparedStatement stm = connection.prepareStatement("INSERT INTO Student VALUES (?,?,?)");
             stm.setString(1,txtID.getText());

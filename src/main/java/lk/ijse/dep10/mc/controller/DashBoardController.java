@@ -35,7 +35,7 @@ public class DashBoardController {
     @FXML
     void btnEmployeesOnAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/ManageEmployees.fxml")).load()));
+        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/Employee.fxml")).load()));
         stage.show();
         stage.centerOnScreen();
         stage.setTitle("Manage Employees");
@@ -55,7 +55,7 @@ public class DashBoardController {
     @FXML
     void btnTeachersOnAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
-        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/ManageTeachers.fxml")).load()));
+        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("/view/ManageTeacher.fxml")).load()));
         stage.show();
         stage.centerOnScreen();
         stage.setTitle("Manage teachers");
